@@ -1,0 +1,151 @@
+Adding a volt/current meter I've found to be a valuable asset to almost any project, 
+whether it be an SW kit or any other kit or homebrew device.  I was first shown the 
+technique by my elmer, an electronics technician with many years working for the 
+broadcast industry and a big-time homebrewer.
+
+First, you have to find a meter movement.  I have not yet used any digital meters, so I 
+can't speak for them.  The meters I have used are old analog meters, some off of old 
+50s/60s vintage gear, some possibly even older, usually purchased at swap meets.  You 
+can also find these meters at specialty electronics stores.  Here in Tucson, there's a place 
+called Elliots that sells them.  Radio shacks may carry analog movements as well, but 
+they can be pricey.
+
+As for the type of movement, it all depends on what you want.  Many meter movements 
+are already set up to measure voltage or current, and they have a built-in resistor network 
+so that if you apply 10V across the terminals, for example, the meter will point to a "10" 
+on the scale.  These are fine if all you want to do is measure the same voltage or current 
+levels, and if the scale on them is already what you find useful.  You may be able to 
+break into the meter's circuit and remove or modify the resistors.  I've personally never 
+done this, so I can't vouch for that type of mod.
+
+The meters I tend to shop for are ones that have no built-in network and are usually 
+scrapped out of old equipment, where the network was external to the meter movement.  
+These meters will have a small stamp on the face, usually towards the bottom, stating 
+how many microamps it takes to drive the needle to full scale (something like FS = 
+60uA).  You can't simply hook it up to your circuit to measure anything, unless you are 
+interested in microamp or millivolt type readings.  You have to make your own resistor 
+network.
+
+All you need for this is Ohm's Law:  Volts = Amps * Resistance, or V = I * R.  Nothing 
+magic about it.  First though you need to find out what voltage is needed to drive the 
+needle to full scale.  You can look at the meter face and calculate how to obtain that full-
+scale current value, or (and what I always do) you can experimentally determine what 
+drives the needle to full scale for the voltages you wish to measure.  For example, say I 
+want 12V to be full scale.  I know that the meter says that 100 uA is full scale.  So using 
+Ohm's Law, I know that I can obtain the R needed by taking 12 V / 100 uA = 120 K-ohm 
+resistance.  So I just put the 120K resistor in SERIES (not parallel) with the 12 V source, 
+keeping an eye on the polarity of the meter (feed the positive voltage terminal through the 
+resistor and then to the positive meter terminal, for instance, and the negative terminal of 
+the meter goes back to ground).  
+
+Fire it up and see what happens.  Since real-world results typically are different from 
+theory, you will likely have to adjust the resistor values up or down in order to peg right 
+at the full scale mark.  That's where the experimenting comes in.  Keep in mind also that 
+different types of resistors are more or less temperature variant than others (beyond the 
+scope of this discussion!).  So once you find out what values are optimal for full-scale 
+deflection at the voltage of interest, you may want to install high-quality components for 
+the final network.
+
+For a current meter, a very similar procedure is used.  This time, the voltage that drives 
+the meter is obtained through a very small value of resistance in series with the power 
+supply.  So instead of the positive supply line going directly to your SW20 circuit, you 
+intercept it first and make it pass through a 1 Ohm resistor, say, and then the current will 
+make its way to the SW20.
+
+Here I'll make a note of something else that is important.  For voltage or current meters, 
+you want to make sure that the full-scale reading consumes a very small amount of 
+current, for obvious reasons.  You don't want all your battery pack energy wasted in 
+deflecting a needle!  Most of the time this has not been an issue for me because meters 
+are designed for that idea in mind and consume very little energy (in the example above, 
+100 uA, or .1 mA, is all).  But at least do a quick calculation for current consumption 
+before installing the meter.
+
+Ok back to the current meter.  Usually the 100 uA meter like the one mentioned above 
+will only need millivolts (or less) to push it to full-scale deflection.  Once you establish 
+what value of current is needed for full-scale (from making a voltmeter or just through 
+experimentation), you can calculate what the voltage drop is across the meter.  One way 
+to do this is take an existing current meter, drive the resistor network with the voltage you 
+want that drives it to full-scale, and measure that current.  Using ohms law, just take V / I 
+to get the total resistance of the circuit.  Since you know the value of the R that you put in 
+the network, then you know that whatever is left is due to resistance of the meter 
+movement (which will be quite low).  Another way you can go is to set up the meter 
+circuit to drive the needle to full scale, then take a sensitive volt meter and measure the 
+voltage across the meter terminals.  However, since this voltage is quite small, the 
+influence of the meter you use to measure it may drop the voltage of the meter under test!  
+Anyhow, try to get an estimate of either the resistance or the full-scale voltage, and use 
+ohms law to calculate the full-scale voltage if necessary.
+
+Once you know the full-scale voltage, all you need to do is use Ohm's Law again to find 
+out what value of resistor to put in series with your rig to measure current. Let's say full-
+scale is 100 mV. Make a measurement of your current draw for the circuit, and decide 
+what you want your full-scale current reading to be. Let's say you decide on 100 mA. Use 
+Ohms law and calculate the R needed for a voltage drop of 100mV: R = V / I = 100 mV / 
+100 mA = 1 ohm. So, a circuit drawing 100 mA will cause a voltage drop of 100 mV 
+across a 1 ohm resistor. And that 100 mV will cause your needle to deflect to a full-scale  
+reading. 
+ 
+Note that the power supply voltage was irrelevant in this calculation. The critical value 
+was current. Also, check the current consumption with the addition of 1 Ohm. Will it 
+cause an appreciable increase in current draw for the power supply? Instinct tells you no, 
+because 1 ohm is a very small level of additional resistance. But if you want to, you can 
+attempt to calculate it. Find the total circuit resistance by taking V / I, which in this case  
+would be 12 V / 100 mA = 120 ohms. By adding 1 more ohm, your circuit current 
+decreases to 12 V / 121 Ohms = 99.2 mA. So the 1 ohm resistance uses up only an 
+additional .8 mA of current! Not much to worry about, in this case. 
+ 
+Again, you will likely have to experiment with slightly lower or higher series resistances 
+in order to get the 100 mA (or whatever value you choose) to hit the full-scale reading. 
+This can be tricky with the current-sensing resistor, since the values are usually  
+around 1 ohm or less. Remember you can combine resistors in parallel to get different 
+values. For example, two 1-ohms in parallel will give you a 1/2 ohm resistor. 
+ 
+A couple of other points. You need to calculate the power that will be consumed by your 
+resistor and make sure you are using a resistor rated for that power, otherwise you will 
+notice it getting very hot, its value will change and it may disintegrate! Just take the full- 
+scale amps * volts. In this case, .1 A * .1 V = .01 Watts or 10 mW. So a garden-variety 
+1/4 W (250 mW) resistor ought to work fine for this application. 
+ 
+It may seem confusing at first, but as you do more meters it becomes second nature.  
+ 
+Again, there are other meters out there which I am not familiar with, and there may be 
+more sophisticated methods to achieve the same goals. I'm just giving you the methods 
+that have worked for me on my projects. 
+ 
+Aesthetics: 
+ 
+Another issue outside of the electronics involved is re-calibration of the scale. If you 
+bought a meter that already has the voltage or current scale on it that you want, then you 
+don't have to worry about it. If on the other hand the meter that you have has completely  
+unrelated numbers to what you want, you will probably want to re-scale it. Now the old 
+analog meters that I'm used to using have bolts and nuts coming out the back side. All 
+you have to do is loosen the hardware and the front panel will snap or slide off. Of  
+course be very careful not to disturb the needle or movement hardware. The backing plate 
+(the thing with numbers printed on it) is usually attached by two miniature screws, like 
+the kinds you find in watches. If you carefully unscrew them, you can slide the plate  
+off of the meter housing. Then using a clean fresh pencil eraser, you can rub off the old 
+numerals. Be careful to not rub off the scale markers, just the numbers above and below. 
+It takes a lot of time but they will generally come off. Then what I do is purchase  
+some "transfer letters" from an art supply store. They come on these waxy paper sheets 
+and there are different fonts available. All you do is line up the numbers you want onto 
+the scale markers, and rub the paper to transfer the letter onto the face. If you can find 
+self-adhesive number stickers, that would be even better. With the transfer letters, since 
+they do not have very good adhesion, you will need to also pick up some clear-coat 
+spray-on stuff. The one I use is called "Crystal Clear" I believe, and I think it was made 
+by Krylon. It's a transparent coating that you spray on from a paint can type sprayer, and 
+in a few minutes it dries and whatever is underneath it will be glued down by the film. It 
+works great.  
+ 
+The finished product will look very professional, especially if you have a lot of 
+mechanical ability and good tools (I don't have either!). Even with my bungling, my 
+meters have turned out pretty good. The hardest part of the entire process for me has been  
+creating mounting holes to house the meter in the box. I generally use metal boxes 
+because I don't like working with plastic, but I have not found an easy way to create nice, 
+round holes through the metal that are the 2 or 3 inches in diameter necessary to mount 
+the meter. I have used tin snips and metal jigsaw blades, but they are not the  
+best way to go. I've heard that if you can find a metal hole-saw, like what are used to drill 
+holes for door knobs, that these will create a very nice smooth hole. Someone who is 
+more skilled in metal working may have a better suggestion. 
+ 
+I hope this helps. 72, 73, and enjoy your building. 
+ 
+Bert WF7I
